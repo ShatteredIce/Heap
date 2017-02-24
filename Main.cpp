@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <fstream>
 #include "Heap.h"
 
 using namespace std;
@@ -19,7 +20,8 @@ int main(){
   int copyIndex;
 
   cout << "\n-----Heap Data Structure v1.0-----\n";
-  cout << "Stores a string of integers into an array representing a heap data structure\n";
+  cout << "Stores a string of integers into an array representing a heap data structure.\n";
+  cout << "Enter 'file' to use a file as input or 'quit' to exit the program.\n";
   cout << "C++ Project 9 - Nathan Purwosumarto\n\n";
 
   while(running){
@@ -29,31 +31,53 @@ int main(){
     if(strcmp(input, "quit") == 0){
       cout << "\nProgram Terminated." << endl;
       running = false;
+      break;
     }
-    else{
-      heap->clear();
-      copyIndex = 0;
-      for(int i = 0; i < strlen(input); i++){
-        if(isdigit(input[i])){
-          number[copyIndex] = input[i];
-          copyIndex++;
-        }
-        else if(copyIndex != 0){
-          heap->addValue(strtol(number, NULL, 10));
-          fill(number, number + 11, ' ');
-          copyIndex = 0;
-        }
-        else{
-          copyIndex = 0;
-        }
+    if(strcmp(input, "file") == 0){
+      cout << "Enter filename: ";
+      getInput(input);
+      ifstream myfile(input);
+      if (myfile.is_open()){
+        myfile.getline(input, 101);
+        cout << input << endl;
+        myfile.close();
       }
-      if(copyIndex != 0){
+      else{
+        cout << "Unable to open file.\n\n";
+        continue;
+      }
+    }
+    heap->clear();
+    copyIndex = 0;
+    fill(number, number + 11, ' ');
+    for(int i = 0; i < strlen(input); i++){
+      if(isdigit(input[i])){
+        number[copyIndex] = input[i];
+        copyIndex++;
+      }
+      else if(copyIndex != 0){
         heap->addValue(strtol(number, NULL, 10));
         fill(number, number + 11, ' ');
         copyIndex = 0;
       }
+      else{
+        copyIndex = 0;
+      }
     }
+    if(copyIndex != 0){
+      heap->addValue(strtol(number, NULL, 10));
+      fill(number, number + 11, ' ');
+      copyIndex = 0;
+    }
+    cout << "Full Heap: \n";
     heap->display();
+    cout << "Output: ";
+    while(heap->getSize() > 0){
+      cout << heap->removeValue() << " ";
+      // cout << "Full Heap: \n";
+      // heap->display();
+    }
+    cout << "\n\n";
   }
 }
 

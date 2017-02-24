@@ -7,8 +7,11 @@ class Heap {
     Heap();
     void clear();
     void addValue(int);
-    void sift(int);
+    int removeValue();
+    void siftUp(int);
+    void siftDown(int);
     void display();
+    int getSize();
   protected:
     int data[1000];
     int size;

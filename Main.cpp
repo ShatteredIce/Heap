@@ -16,7 +16,7 @@ int main(){
 
   Heap* heap = new Heap();
   bool running = true;
-  char input[101];
+  char input[501];
   char number[11];
   int copyIndex;
 
@@ -42,7 +42,7 @@ int main(){
       fstream myfile(input);
       if (myfile.is_open()){
         //if file is found, copy contents into input
-        myfile.getline(input, 101);
+        myfile.getline(input, 501);
         trimWhitespace(input);
         cout << input << endl;
         myfile.close();
@@ -95,8 +95,8 @@ int main(){
 
 //stores user input into a char*
 void getInput(char* input){
-  fill(input, input + 101, ' ');
-  cin.getline(input, 101);
+  fill(input, input + 501, ' ');
+  cin.getline(input, 501);
   trimWhitespace(input);
 }
 

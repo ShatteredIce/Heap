@@ -5,15 +5,18 @@
 
 using namespace std;
 
+//constructor
 Heap::Heap(){
   size = 0;
 }
 
+//deletes all values from the heap
 void Heap::clear(){
   fill(data, data+size, 0);
   size = 0;
 }
 
+//adds a value to the heap
 void Heap::addValue(int i){
   data[size] = i;
   size++;
@@ -21,6 +24,7 @@ void Heap::addValue(int i){
   siftUp(size - 1);
 }
 
+//if the child value is larger than the parent value, switch the two values' position
 void Heap::siftUp(int index){
   //cout << data[(index-1)/2] << " " << data[index] << endl;
   if(index == 0){
@@ -35,6 +39,7 @@ void Heap::siftUp(int index){
   }
 }
 
+//removes and returns the maximum value in the heap
 int Heap::removeValue(){
   if(size > 0){
     int maxValue = data[0];
@@ -46,6 +51,7 @@ int Heap::removeValue(){
   }
 }
 
+//if the parent value is smaller then one of the child values, switch the two values' position
 void Heap::siftDown(int index){
   if(size < index * 2 + 1){
     return;
@@ -68,6 +74,7 @@ void Heap::siftDown(int index){
   }
 }
 
+//displays all the data values in the heap showing the parent - child relationship for each value
 void Heap::display(){
   int rowLength = 1;
   int rowPosition = 0;
@@ -83,6 +90,7 @@ void Heap::display(){
   cout << endl;
 }
 
+//gets the number of data values in the heap
 int Heap::getSize(){
   return size;
 }

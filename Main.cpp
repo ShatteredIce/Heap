@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//prototypes
 void getInput(char* input);
 void trimWhitespace(char* input);
 
@@ -24,6 +25,7 @@ int main(){
   cout << "Enter 'file' to use a file as input or 'quit' to exit the program.\n";
   cout << "C++ Project 9 - Nathan Purwosumarto\n\n";
 
+  //gets user input while program is running
   while(running){
     cout << "Input: ";
     getInput(input);
@@ -33,21 +35,27 @@ int main(){
       running = false;
       break;
     }
+    //if the user inputs 'file', prompt for filename
     if(strcmp(input, "file") == 0){
       cout << "Enter filename: ";
       getInput(input);
-      ifstream myfile(input);
+      fstream myfile(input);
       if (myfile.is_open()){
+        //if file is found, copy contents into input
         myfile.getline(input, 101);
+        trimWhitespace(input);
         cout << input << endl;
         myfile.close();
       }
+      //tell the user if filename is invalid
       else{
         cout << "Unable to open file.\n\n";
         continue;
       }
     }
+    //clear previous data from heap
     heap->clear();
+    //extracts numbers from the input char array one by one
     copyIndex = 0;
     fill(number, number + 11, ' ');
     for(int i = 0; i < strlen(input); i++){
@@ -55,6 +63,7 @@ int main(){
         number[copyIndex] = input[i];
         copyIndex++;
       }
+      //add the extracted number into the heap
       else if(copyIndex != 0){
         heap->addValue(strtol(number, NULL, 10));
         fill(number, number + 11, ' ');
@@ -64,17 +73,20 @@ int main(){
         copyIndex = 0;
       }
     }
+    //add the extracted number into the heap
     if(copyIndex != 0){
       heap->addValue(strtol(number, NULL, 10));
       fill(number, number + 11, ' ');
       copyIndex = 0;
     }
+    //display the full heap after all numbers have been added
     cout << "Full Heap: \n";
     heap->display();
     cout << "Output: ";
+    //remove every value from heap and add it to the output
     while(heap->getSize() > 0){
       cout << heap->removeValue() << " ";
-      // cout << "Full Heap: \n";
+      // cout << "Heap: \n";
       // heap->display();
     }
     cout << "\n\n";
@@ -88,6 +100,7 @@ void getInput(char* input){
   trimWhitespace(input);
 }
 
+//trims the whitespace from a char*
 void trimWhitespace(char* text){
   char* newText = text;
   char lastChar = ' ';
